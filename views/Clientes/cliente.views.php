@@ -87,8 +87,9 @@ if (isset($_SESSION["em_id"])) {
                                     <input type="hidden" name="cliente_id" id="cliente_id">
 
                                     <div class="form-group">
-                                    <label for="cli_cedula" class="control-label">Cedula</label>
+                                        <label for="cli_cedula" class="control-label">Cedula</label>
                                         <input type="text" name="cli_cedula" id="cli_cedula" class="form-control" required>
+                                        <small id="cedulaError" class="text-danger"></small>
                                     </div>
 
                                     <div class="form-group">
@@ -137,7 +138,7 @@ if (isset($_SESSION["em_id"])) {
                                     <input type="hidden" name="id_empleado" id="id_empleado" value="">
                                 </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="btnGuardar" disabled>Guardar</button>
                             <button type="button" class="btn btn-secondary" onclick="limpiar()" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -156,7 +157,65 @@ if (isset($_SESSION["em_id"])) {
     // Asigna el valor de idEmpleado al input oculto
     document.getElementById('id_empleado').value = idEmpleado;
 </script>
+<script>
+        var cedulaInput = document.getElementById("cli_cedula");
+        var cedulaError = document.getElementById("cedulaError");
+        var btnGuardar = document.getElementById("btnGuardar");
 
+        cedulaInput.addEventListener("blur", validarCedula);
+
+        function validarCedula() {
+            var cedula = cedulaInput.value;
+
+            if (esCedulaValida(cedula) && esCedulaProvinciaEcuador(cedula) && validarAlgoritmoCedula(cedula)) {
+                cedulaError.textContent = "";
+                btnGuardar.disabled = false;
+            } else {
+                cedulaError.textContent = "La cédula no es válida";
+                btnGuardar.disabled = true;
+            }
+        }
+
+        function esCedulaValida(cedula) {
+            // Validación básica de longitud y formato numérico
+            if (cedula.length !== 10 || !/^\d{10}$/.test(cedula)) {
+                return false;
+            }
+            return true;
+        }
+
+        function esCedulaProvinciaEcuador(cedula) {
+            // Obtener el código de provincia
+            var provincia = parseInt(cedula.substr(0, 2));
+
+            // Verificar si la provincia está en el rango de provincias de Ecuador
+            if (provincia >= 1 && provincia <= 24) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        function validarAlgoritmoCedula(cedula) {
+            var total = 0;
+            var coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+            var digitoVerificador = parseInt(cedula.substring(9, 10));
+
+            for (var i = 0; i < 9; i++) {
+                var digito = parseInt(cedula.substring(i, i + 1));
+                var resultado = digito * coeficientes[i];
+                if (resultado > 9) {
+                    resultado -= 9;
+                }
+                total += resultado;
+            }
+
+            var residuo = total % 10;
+            var resultadoFinal = residuo === 0 ? 0 : 10 - residuo;
+
+            return resultadoFinal === digitoVerificador;
+        }
+    </script>
     </body>
 
     </html>
