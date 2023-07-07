@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-07-2023 a las 06:08:33
+-- Tiempo de generación: 06-07-2023 a las 06:30:51
 -- Versión del servidor: 10.4.27-MariaDB-log
 -- Versión de PHP: 8.1.12
 
@@ -46,9 +46,10 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`cliente_id`, `cli_cedula`, `cli_nombre`, `cli_apellido`, `cli_fecha_nacimiento`, `cli_genero`, `cli_altura`, `cli_peso`, `cli_telefono`, `cli_direccion`, `id_empleado`) VALUES
-(2, '1600618381', 'Ariel', 'Llerena', '2022-11-03', 'Masculino', '1.60', '38', 998674117, 'Sueño de bolivar', 40),
-(22, '1720713112', 'Maria ', 'Santana', '2023-06-01', 'Femenino', '1.54', '45', 987456321, 'Quito', 40),
-(25, '1715395479', 'Melany', 'Vizcaino', '2002-02-07', 'Femenino', '1.54', '25', 987451569, 'Santo domingo', 40);
+(2, '1600618281', 'Ariel', 'Llerena', '2022-11-03', 'Masculino', '1.60', '0.60', 998674117, 'Sueño de bolivar', 1),
+(22, '1720713112', 'Maria ', 'Santana', '2023-06-01', 'Femenino', '1.54', '45', 987456321, 'Quito', 1),
+(23, '1789645422', 'Juan', 'Gregorio', '2023-06-09', 'Masculino', '1.70', '45', 987456321, 'Loja', 1),
+(24, '1724208184', 'Kevin', 'Defaz', '2007-02-28', 'Masculino', '1.70', '45', 897456321, 'Santo domingo', 9);
 
 -- --------------------------------------------------------
 
@@ -72,9 +73,10 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`em_id`, `em_nombre`, `em_apellido`, `em_cedula`, `em_telefono`, `em_correo`, `em_contrasena`, `rol_id`) VALUES
-(1, 'Jhonny ', 'Miranda', '2300035421', '023791167', 'admin', '$2y$10$HyKl/4mJKK9vkjf5I5MW1Ok/qF08fd7h3NOSGJnT8qHX7H/OgUo0a', 1),
-(32, 'Ariel', 'LLerena', '1600618381', '0896523147', 'ariel', '$2y$10$w1kimU9yi9jhqdE4kjW/NuaBwVuZdOIwAEANMEnSeadvxcOGUbs0u', 2),
-(40, 'Cristian', 'Defaz', '1721664090', '0987654321', 'cristian', '$2y$10$px2cRDttQWqdYIArP/9MhOBQqft1lquumMEddTX/XmgO5Rr74/TMW', 1);
+(1, 'Jhonny ', 'Miranda', '2300035421', '023791167', 'admin', '123', 1),
+(9, 'Cristian', 'Defaz', '1721664090', '0987654321', 'face', '123', 1),
+(31, 'lorena', 'parra', '156987442', '0258963478', 'parra', '$2y$10$PBdQnubhzZgzFR6yEAoLme/eJCbhxCRBstUAgwX2SdDCeFtqO37nG', 1),
+(32, 'Ariel', 'LLerena', '1742589639', '0896523147', 'ariel', '$2y$10$tsFqwVObcgIc6kzIpMf1u.fZ87uUKdCT2aJC5igWgSEU2RwNm8sHq', 2);
 
 -- --------------------------------------------------------
 
@@ -96,8 +98,8 @@ CREATE TABLE `facturas` (
 --
 
 INSERT INTO `facturas` (`factura_id`, `cli_id`, `fa_fecha`, `men_id`, `fa_montol_total`, `id_empleado`) VALUES
-(15, 2, '2023-07-06', 3, 20, 40),
-(16, 25, '2023-07-09', 4, 120, 40);
+(14, 23, '2023-07-05', 3, 20, 31),
+(15, 2, '2023-07-06', 3, 20, 31);
 
 -- --------------------------------------------------------
 
@@ -119,9 +121,9 @@ CREATE TABLE `membresia` (
 --
 
 INSERT INTO `membresia` (`men_id`, `cliente_id`, `tipo_id`, `men_fecha_inicio`, `men_fecha_fin`, `men_estado`) VALUES
+(26, 23, 3, '2023-07-05 16:19:00', '2023-08-05 16:19:00', 'Activo'),
 (33, 2, 3, '2023-07-05 23:21:00', '2023-08-05 23:21:00', 'Activo'),
-(35, 25, 4, '2023-07-06 00:22:00', '2024-01-06 00:22:00', 'Activo'),
-(36, 22, 6, '2023-07-06 22:42:00', '2023-07-06 22:43:00', 'Expirado');
+(34, 24, 6, '2023-07-05 23:24:00', '2023-07-05 23:25:00', 'Expirado');
 
 -- --------------------------------------------------------
 
@@ -227,25 +229,25 @@ ALTER TABLE `tipo_menbresia`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `cliente_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `em_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `em_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `factura_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `factura_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `membresia`
 --
 ALTER TABLE `membresia`
-  MODIFY `men_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `men_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

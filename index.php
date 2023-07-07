@@ -34,7 +34,7 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image">
-                                <img src="https://img.freepik.com/vector-gratis/club-fitness-atletico-duro-emblema-vintage-gimnasio-brazo-culturista-barra_74855-11247.jpg" alt="Imagen de fondo del login" style="width: 500px; height: 400px; float: right;">
+                              <img src="https://img.freepik.com/vector-gratis/club-fitness-atletico-duro-emblema-vintage-gimnasio-brazo-culturista-barra_74855-11247.jpg" alt="Imagen de fondo del login" style="width: 450px; height: 400px; float: right;">
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
