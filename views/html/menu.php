@@ -4,7 +4,7 @@
 <!-- Sidebar - Brand -->
 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../Dashboard/">
     
-<div class="sidebar-brand-text mx-3">ENERGY GYM
+<div class="sidebar-brand-text mx-3">EVOLUTION GYM
     <img class="rounded-circle" src="https://svgsilh.com/svg_v2/1048852.svg">
 </div>
 

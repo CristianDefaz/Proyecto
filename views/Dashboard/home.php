@@ -20,7 +20,7 @@
                                 <img class="w-100" src="../../public/imgs/carousel-1.jpg" alt="Image">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 
-                                    <h2 class="display-2 m-0 mt-2 mt-md-4 text-white font-weight-bold text-capitalize">ENERGY GYM</h2>
+                                    <h2 class="display-2 m-0 mt-2 mt-md-4 text-white font-weight-bold text-capitalize">EVOLUTION GYM</h2>
                                     
                                 </div>
                             </div>
