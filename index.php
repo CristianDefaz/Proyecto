@@ -17,7 +17,15 @@
 
     <!-- Custom styles for this template-->
     <link href="./public/css/sb-admin-2.min.css" rel="stylesheet">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QKP58L7P4D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-QKP58L7P4D');
+</script>
 </head>
 
 <body class="bg-gradient-primary">

@@ -1,7 +1,7 @@
 <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; ARIEL LLERENA, CRISTIAN DEFAZ, JHONY MIRANDA </span>
+                        <span>Made By&copy;  CRISTIAN DEFAZ, JHONY MIRANDA ,ARIEL LLERENA , KEVIN SHANCHEZ </span>
                     </div>
                 </div>
             </footer>
