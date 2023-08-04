@@ -25,14 +25,14 @@ if (isset($_SESSION["em_id"])) {
                     <div class="container-fluid">
 
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Clientes</h1>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 mb-4">
 
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Lista de Clientes</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Clientes Registrados</h6>
                                         <button onclick="" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalCliente"> Nuevo Cliente</button>
                                     </div>
                                     <div class="card-body">
@@ -41,14 +41,14 @@ if (isset($_SESSION["em_id"])) {
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Cedula</th>
+                                                    <th>Cédula</th>
                                                     <th>Nombre</th>
                                                     <th>Apellido</th>
                                                     <th>Fecha nacimiento</th>
                                                     <th>Genero</th>
-                                                    <th>Altura</th>
-                                                    <th>Peso</th>
-                                                    <th>Telefono</th>
+                                                    <th>Altura (Metros)</th>
+                                                    <th>Peso (KG)</th>
+                                                    <th>Teléfono</th>
                                                     <th>Direccion</th>                                     
                                                     <th></th>
                                                 </tr>
@@ -94,7 +94,7 @@ if (isset($_SESSION["em_id"])) {
 
                                     <div class="form-group">
                                     <label for="cli_nombre" class="control-label">Nombres</label>
-                                    <input type="text" name="cli_nombre" id="cli_nombre" class="form-control" required>
+                                    <input type="text" name="cli_nombre" id="cli_nombre" class="form-control"  required>
                                     </div>
 
                                     <div class="form-group">
@@ -117,23 +117,23 @@ if (isset($_SESSION["em_id"])) {
 
 
                                     <div class="form-group">
-                                    <label for="cli_altura" class="control-label">Altura</label>
+                                    <label for="cli_altura" class="control-label">Altura (Metros)</label>
                                         <input type="text" name="cli_altura" id="cli_altura" class="form-control" required>
                                     </div>
                                     
                                     <div class="form-group">
-                                    <label for="cli_peso" class="control-label">Peso</label>
-                                        <input type="text" name="cli_peso" id="cli_peso" class="form-control" required>
+                                    <label for="cli_peso" class="control-label">Peso (KG)</label>
+                                        <input type="text" name="cli_peso" id="cli_peso" class="form-control" pattern="[0-9]+(\.[0-9]+)?" minlength="1" maxlength="10" required>
                                     </div>
 
                                     <div class="form-group">
                                     <label for="cli_telefono" class="control-label">Telefono</label>
-                                        <input type="text" name="cli_telefono" id="cli_telefono" class="form-control" required>
+                                        <input type="text" name="cli_telefono" id="cli_telefono" class="form-control" numeros:  pattern="[0-9]+" minlength="10" maxlength="10"required>
                                     </div>
 
                                     <div class="form-group">
                                     <label for="cli_direccion" class="control-label">Direccion</label>
-                                        <input type="text" name="cli_direccion" id="cli_direccion" class="form-control" required>
+                                        <input type="text" name="cli_direccion" id="cli_direccion" class="form-control" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}"  maxlength="40"required>
                                     </div>                           
                                     <input type="hidden" name="id_empleado" id="id_empleado" value="">
                                 </div>
@@ -150,14 +150,115 @@ if (isset($_SESSION["em_id"])) {
         <!--scripts-->
         <?php include_once('../html/scripts.php')  ?>
         <script src="./cliente.js"></script>
-        <script>
+    <script>
     // Obtén el valor de $_SESSION['em_id'] y asígnalo a la variable idEmpleado
     var idEmpleado = "<?php echo isset($_SESSION['em_id']) ? $_SESSION['em_id'] : ''; ?>";
 
     // Asigna el valor de idEmpleado al input oculto
-    document.getElementById('id_empleado').value = idEmpleado;
+    document.getElementById('id_empleado').value = idEmpleado;  
 </script>
+
 <script>
+
+/*-------------------------------------------------------------solo letras------------------------------------*/
+// Función para bloquear la entrada de números en un campo de texto
+function blockNumbersInput(inputElement) {
+  inputElement.addEventListener('keydown', (event) => {
+    // Obtener el código de la tecla pulsada
+    const keyCode = event.which || event.keyCode;
+
+    // Permitir las teclas de control (por ejemplo, las teclas de flecha, retroceso, etc.)
+    if (event.ctrlKey || event.altKey || event.metaKey || keyCode === 8 || keyCode === 9) {
+      return;
+    }
+
+    // Bloquear la entrada si la tecla es un número (códigos de teclas del 0 al 9 y teclado numérico)
+    if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105)) {
+      event.preventDefault();
+    }
+  });
+}
+
+// Obtener la referencia a los elementos de entrada de nombres y apellidos
+const nombreInputElement = document.getElementById('cli_nombre');
+const apellidoInputElement = document.getElementById('cli_apellido');
+
+// Aplicar la restricción de no permitir números en ambos campos
+blockNumbersInput(nombreInputElement);
+blockNumbersInput(apellidoInputElement);
+
+
+/*-------------------------------------------------------------solo numeross------------------------------------*/
+
+// Función para bloquear la entrada que no sea números en un campo de texto
+function blockNonNumbersInput(inputElement) {
+  inputElement.addEventListener('keydown', (event) => {
+    // Obtener el código de la tecla pulsada
+    const keyCode = event.which || event.keyCode;
+
+    // Permitir las teclas de control (por ejemplo, las teclas de flecha, retroceso, etc.)
+    if (event.ctrlKey || event.altKey || event.metaKey || keyCode === 8 || keyCode === 9) {
+      return;
+    }
+
+    // Bloquear la entrada si la tecla no es un número (códigos de teclas del 0 al 9 y teclado numérico)
+    if (!((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105))) {
+      event.preventDefault();
+    }
+  });
+}
+
+// Obtener la referencia a los elementos de entrada de nombres y apellidos
+const telefonoInputElement = document.getElementById('cli_telefono');
+const pesoInputElement = document.getElementById('cli_peso');
+
+
+// Aplicar la restricción de solo permitir números en ambos campos
+blockNonNumbersInput(telefonoInputElement);
+blockNonNumbersInput(pesoInputElement);
+
+
+
+/*-------------------------------------------------------------solo numeros y Punto------------------------------------*/
+
+// Función para bloquear la entrada que no sean números y puntos en un campo de texto
+function blockNonNumbersAndDecimalInput(inputElement) {
+  inputElement.addEventListener('keydown', (event) => {
+    // Obtener el código de la tecla pulsada
+    const keyCode = event.which || event.keyCode;
+
+    // Permitir las teclas de control (por ejemplo, las teclas de flecha, retroceso, etc.)
+    if (event.ctrlKey || event.altKey || event.metaKey || keyCode === 8 || keyCode === 9) {
+      return;
+    }
+
+    // Permitir números y el punto decimal (códigos de teclas del 0 al 9, teclado numérico y el punto)
+    if (
+      (keyCode >= 48 && keyCode <= 57) || // Números desde el teclado principal
+      (keyCode >= 96 && keyCode <= 105) || // Números desde el teclado numérico
+      keyCode === 110 || keyCode === 190 // Punto decimal (tanto el punto como el numpad decimal)
+    ) {
+      // Verificar que no haya más de un punto decimal en el campo
+      if ((keyCode === 110 || keyCode === 190) && inputElement.value.includes('.')) {
+        event.preventDefault();
+      }
+    } else {
+      event.preventDefault();
+    }
+  });
+}
+
+// Obtener la referencia a los elementos de entrada de nombres y apellidos
+const alturaInputElement = document.getElementById('cli_altura');
+
+// Aplicar la restricción de solo permitir números y puntos en ambos campos
+blockNonNumbersAndDecimalInput(alturaInputElement);
+
+
+/*-------------------------------------------------------------FIN------------------------------------*/
+
+
+
         var cedulaInput = document.getElementById("cli_cedula");
         var cedulaError = document.getElementById("cedulaError");
         var btnGuardar = document.getElementById("btnGuardar");
@@ -216,6 +317,10 @@ if (isset($_SESSION["em_id"])) {
             return resultadoFinal === digitoVerificador;
         }
     </script>
+
+
+
+
     </body>
 
     </html>

@@ -32,7 +32,7 @@ if (isset($_SESSION["em_id"])) {
 
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Lista de <?php echo $_SESSION["ruta"]?></h6>
+                                        <h6 class="m-0 font-weight-bold text-primary"><?php echo $_SESSION["ruta"]?> Registrados</h6>
                                         <button onclick="cargaSelectRoles()" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalUsuarios"> Nuevo Empleado</button>
                                     </div>
                                     <div class="card-body">
@@ -44,7 +44,7 @@ if (isset($_SESSION["em_id"])) {
                                                     <th>Nombre</th>
                                                     <th>Apellido</th>
                                                     <th>Cedula</th>
-                                                    <th>Telefono</th>
+                                                    <th>Teléfono</th>
                                                     <th>Correo</th>
                                                     <th>Rol</th>
                                                     <th>Opciones</th>
