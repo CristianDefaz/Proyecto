@@ -9,6 +9,9 @@ function init() {
     tablamembresia();
     cargaSelectcitipo();
   });
+
+  
+
   var tablamembresia = () => {
     var html = "";
     $.post(
@@ -34,6 +37,7 @@ function init() {
       }
     );
   };
+ 
 
 
   function calcularTiempoRestante(fechaFinMembresia, men_id) {
@@ -122,15 +126,19 @@ function init() {
       contentType: false,
       cache: false,
       success: (respuesta) => {
-        respuesta = JSON.parse(respuesta);
-        console.log(respuesta);
-        if (respuesta == "ok") {
-          Swal.fire('Categoria de membresia', 'Se guardo con exito', 'success');
-          limpiar();
-          tablamembresia();
-        } else {
-          Swal.fire('Categoria de membresia', 'Ocurrio un error', 'danger');
-        }
+        try{
+          respuesta = JSON.parse(respuesta);
+          console.log(respuesta);
+          if (respuesta == "ok") {
+            Swal.fire('Categoria de membresia', 'Se guardo con exito', 'success');
+            limpiar();
+            tablamembresia();
+          } else {
+            Swal.fire('Categoria de membresia', 'Ocurrio un error', 'danger');
+          }
+        }catch(error){
+        Swal.fire('Error', 'No se puede guardar la membresia, ya que esta se encuentra registrada, elimine la membresia existente e intente nuevamente', 'error');
+      }
       },
     });
   };

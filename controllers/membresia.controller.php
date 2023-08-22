@@ -32,6 +32,8 @@ switch ($_GET['op']) {
             echo json_encode($respuesta);
             break;
 
+            
+
 
     case 'insertar':
         $idcliente = $_POST['cliente_id'];

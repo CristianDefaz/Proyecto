@@ -11,6 +11,8 @@ $().ready(() => {
 });
 var cargartablaF = () => {
   var html = "";
+  var rolId = document.getElementById('rolId').value; // Obtén el valor del campo de texto oculto
+
   $.post(
     "../../controllers/factura.controller.php?op=todos", {}, (listafacturas) => {
       listafacturas = JSON.parse(listafacturas);
@@ -18,15 +20,21 @@ var cargartablaF = () => {
         html +=
           `<tr>` +
           `<td>${index + 1}</td>` +
-          `<td>${facturas.cli_cedula}
+          `<td>${facturas.cli_cedula} - 
           ${facturas.cli_nombre}
           ${facturas.cli_apellido}</td>` +
           `<td>${facturas.fa_fecha}</td>` +
           `<td>${facturas.tipo_menbresia}</td>` +
           `<td>${facturas.tipo_costo}</td>` +
-          `<td>` +
+          `<td>`;
+        
+        // Agregar el botón "Eliminar" solo si el rolId es igual a 1
+        if (rolId === "1") {
+          html += `<button class='btn btn-danger' onclick='eliminar(${facturas.factura_id})'>Eliminar</button>`;
+        }
+        
+        html +=
           `<button class='btn btn-success' onclick='uno(${facturas.factura_id})'>Editar</button>` +
-          `<button class='btn btn-danger' onclick='eliminar(${facturas.factura_id})'>Eliminar</button>` +
           `<a class="btn btn-info" href="imprimir.php?id=${facturas.factura_id}" target="_blank">Imprimir Factura</a>` +
           `</td>` +
           `</tr>`;
@@ -45,7 +53,7 @@ var cargaselect = () => {
     listaclientes = JSON.parse(listaclientes);
     let htmlcliente = "";
     $.each(listaclientes, (index, cedula) => {
-        htmlcliente += `<option value="${cedula.cliente_id}">${cedula.cli_cedula}-N:${cedula.cli_nombre}-A:${cedula.cli_apellido}</option>`;
+        htmlcliente += `<option value="${cedula.cliente_id}">${cedula.cli_cedula} - ${cedula.cli_nombre} ${cedula.cli_apellido}</option>`;
     });
     $("#cli_id").html(htmlcliente);
 });

@@ -25,6 +25,24 @@ var filtrarPorFecha = () => {
     );
 };
 
+/*var ImprimirJavascript = (e)=>{
+    e.preventDefault();
+    
+  var contenidoImprimir = document.getElementById('imprimir').innerHTML;
+
+    var contenidoOriginal = document.body.innerHTML;
+  var ventanaabierta = window.open('','_blank');
+  
+   // document.body.innerHTML = contenidoImprimir;
+   // window.print()
+    document.body.innerHTML = contenidoOriginal;
+   
+   
+}*/
+
+
+
+
 var generarTablaFacturas = (listafacturas) => {
     var html = "";
     listafacturas.forEach((factura, index) => {
@@ -55,6 +73,25 @@ var calcularSumaMontos = (listafacturas) => {
     console.log("Suma de montos:", sumaMontos);
     document.getElementById("sumaMontosInput").value = sumaMontos;
 };
+
+var generarPDF = (sumaMontos, fechaDesde, fechaHasta) => {
+    // Enviar solicitud al script PHP para generar el PDF utilizando Ajax
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "Imprimir.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Aquí podrías mostrar una notificación o redireccionar, dependiendo de tu necesidad
+        }
+    };
+    
+    // Enviamos los datos de sumaMontos, fechaDesde y fechaHasta al script PHP
+    var data = "sumaMontos=" + encodeURIComponent(sumaMontos) +
+               "&fechaDesde=" + encodeURIComponent(fechaDesde) +
+               "&fechaHasta=" + encodeURIComponent(fechaHasta);
+    xhr.send(data);
+};
+
 
 
   

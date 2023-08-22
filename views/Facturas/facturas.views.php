@@ -2,7 +2,9 @@
 include_once('../../config/sesiones.php');
 if (isset($_SESSION["em_id"])) {
     $_SESSION["ruta"] = "Factura";
-
+    
+    $rol_id = $_SESSION['rol_id'];
+   
 ?>
     <!DOCTYPE html>
     <html lang="es">
@@ -36,7 +38,21 @@ if (isset($_SESSION["em_id"])) {
                                         <button onclick="cargaselect()" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalFactura"> Nueva <?php echo $_SESSION["ruta"] ?></button>
                                     </div>
                                     <div class="card-body">
+                                        <!-- BUSCADOR -->
 
+                                        <div class="form-group">
+                                            
+                                            <div class="input-group">
+                                                <input type="text" name="buscarInput" id="buscarInput" placeholder="Busqueda por Cédula, Apellido o Tipo de membresia" class="form-control" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary" type="button" onclick="busqueda()">
+                                                        <i class="fas fa-search fa-sm"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <!-- END BUSCADOR -->
+                                         <input type="hidden" id="rolId" value="<?php echo $rol_id; ?>">
                                         <table class="table table-bordered table-striped table-responsive">
                                             <thead>
                                                 <tr>
@@ -44,7 +60,7 @@ if (isset($_SESSION["em_id"])) {
                                                     <th>Datos Cliente</th>
                                                     <th>Fecha</th>
                                                     <th>Membresia</th>
-                                                    <th>Monto</th>
+                                                    <th>Monto "$"</th>
                                                     <th>Opciones</th>
                                                 </tr>
                                             </thead>
@@ -82,6 +98,7 @@ if (isset($_SESSION["em_id"])) {
                         </button>
 
                     </div>
+                    
                     <form id="Facturas_form">
                         <div class="modal-body">
                             <input type="hidden" name="factura_id" id="factura_id">
@@ -101,7 +118,7 @@ if (isset($_SESSION["em_id"])) {
                                     </select>
                                 </div>
                                     <div class="form-group">
-                                        <label for="fa_montol_total" class="control-label">Valor a Pagar</label>
+                                        <label for="fa_montol_total" class="control-label">Valor a Pagar "$"</label>
                                         <input type="text" name="fa_montol_total" id="fa_montol_total" class="form-control" readonly />                                      
                                     </div>
                                     <input type="hidden" name="id_empleado" id="id_empleado" value="">
@@ -175,6 +192,19 @@ if (isset($_SESSION["em_id"])) {
         <?php include_once('../html/scripts.php')  ?>
         
         <script src="./Facturas.js"></script>
+        <script>
+    function busqueda() {
+        var buscar = document.getElementById("buscarInput").value;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("TablaFactura").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "facturas.busqueda.php?buscar=" + buscar, true);
+        xmlhttp.send();
+    }
+</script>
         <script>
     // Obtén el valor de $_SESSION['em_id'] y asígnalo a la variable idEmpleado
     var idEmpleado = "<?php echo isset($_SESSION['em_id']) ? $_SESSION['em_id'] : ''; ?>";

@@ -26,6 +26,7 @@ var tablacliente = () => {
           `<td>${cliente.cli_peso}</td>` +
           `<td>${cliente.cli_telefono}</td>` +
           `<td>${cliente.cli_direccion}</td>` +
+          `<td>${cliente.cli_email}</td>` +
           `<td>` +
           `<button class='btn btn-success' onclick='uno(${cliente.cliente_id})'>Editar</button>` +
           `<button class='btn btn-danger' onclick='eliminar(${cliente.cliente_id})'>Eliminar</button>` +
@@ -55,8 +56,10 @@ var guardayeditarcliente = (e) => {
     contentType: false,
     cache: false,
     success: (respuesta) => {
+      try{
       respuesta = JSON.parse(respuesta);
       console.log(respuesta);
+      
       if (respuesta == "ok") {
         Swal.fire('Categoria de Clientes', 'Se guardo con exito', 'success');
         limpiar();
@@ -64,9 +67,15 @@ var guardayeditarcliente = (e) => {
       } else {
         Swal.fire('Categoria de Clientes', 'Ocurrio un error', 'danger');
       }
+    }catch(error){
+      Swal.fire('Error', 'No se puede guardar este cliente, ya se encuentra registrado', 'error');
+    }
     },
   });
 };
+
+
+
 
 var uno = (cliente_id) => {
   $.post('../../controllers/cliente.controller.php?op=uno', {
@@ -83,11 +92,12 @@ var uno = (cliente_id) => {
     $('#cli_peso').val(res.cli_peso);
     $('#cli_telefono').val(res.cli_telefono);
     $('#cli_direccion').val(res.cli_direccion);
+    $('#cli_correo').val(res.cli_correo);
   })
   document.getElementById('tituloModalCliente').innerHTML = "Editar Cliente";
   $('#modalCliente').modal('show');
 };
-var eliminar = (cliente_id) => {
+/*var eliminar = (cliente_id) => {
   Swal.fire({
     title: 'Cliente',
     text: "Esta seguro que desea eliminar...???",
@@ -107,10 +117,44 @@ var eliminar = (cliente_id) => {
           limpiar();
           tablacliente();
         }
+       
       })
     }
   })
+};*/
+var eliminar = (cliente_id) => {
+  Swal.fire({
+    title: 'Cliente',
+    text: "¿Está seguro que desea eliminar...???",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Eliminar!!!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.post('../../controllers/cliente.controller.php?op=eliminar', {
+        cliente_id: cliente_id
+      }, (res) => {
+        try {
+          res = JSON.parse(res);
+          if (res === 'ok') {
+            Swal.fire('Cliente', 'Se eliminó con éxito', 'success');
+            limpiar();
+            tablacliente();
+          } else {
+            Swal.fire('Error', 'Hubo un problema al eliminar el cliente', 'error');
+          }
+        } catch (error) {
+          Swal.fire('Error', 'No se puede eliminar este cliente, tiene menbresia activa', 'error');
+        }
+      }).fail(() => {
+        Swal.fire('Error', 'No se pudo conectar al servidor', 'error');
+      });
+    }
+  })
 };
+
 
 var limpiar = () => {
   $('#cliente_id').val('');
@@ -123,6 +167,8 @@ var limpiar = () => {
   $('#cli_peso').val('');
   $('#cli_telefono').val('');
   $('#cli_direccion').val('');
+  $('#cli_correo').val('');
+  $('#cli_contrasenia').val('');
   $('#modalCliente').modal('hide');
   document.getElementById('tituloModalCliente').innerHTML = "Nuevo Cliente";
 };
