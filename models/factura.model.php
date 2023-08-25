@@ -15,10 +15,10 @@ class facturaModel
         return $datos;
     }
 
-    public function Insertar($cedula, $fecha,$membresia, $monto,$empleado) {
+    public function Insertar($cliente, $fecha,$membresia, $monto,$empleado) {
         $con = new ClaseConexion();
         $con = $con->ProcedimientoConectar();
-        $cadena = "INSERT INTO `facturas`(`cli_id`,`fa_fecha`,`men_id`,`fa_montol_total`,`id_empleado`) VALUES ('$cedula', '$fecha','$membresia', '$monto','$empleado')";
+        $cadena = "INSERT INTO `facturas`(`cli_id`,`fa_fecha`,`men_id`,`fa_montol_total`,`id_empleado`) VALUES ('$cliente', '$fecha','$membresia', '$monto','$empleado')";
      
         if (mysqli_query($con, $cadena)) {
            return 'ok';

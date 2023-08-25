@@ -89,8 +89,6 @@ var guardayeditarFactura = (e) => {
     url = "../../controllers/factura.controller.php?op=actualizar";
     form_Data.append("factura_id", factura_id)
   }
-
-
   $.ajax({
     url: url,
     type: "POST",

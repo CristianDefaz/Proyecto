@@ -118,6 +118,9 @@ function init() {
       url = "../../controllers/membresia.controller.php?op=actualizar";
     }
     var form_Data = new FormData($("#Membresia_form")[0]);
+    for (let pair of form_Data.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     $.ajax({
       url: url,
       type: "POST",
